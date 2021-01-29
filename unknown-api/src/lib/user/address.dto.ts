@@ -1,4 +1,4 @@
-import { IsString } from 'class-validator';
+import { IsString } from 'lib/user/lib/post/lib/authentication/post/user/authentication/class-validator';
 
 class CreateAddressDto {
   @IsString()

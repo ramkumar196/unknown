@@ -51,6 +51,7 @@ class App {
       MONGO_PASSWORD,
       MONGO_PATH,
     } = process.env;
+    console.log(`mongodb://${MONGO_USER}:${MONGO_PASSWORD}${MONGO_PATH}`);
     mongoose.connect(`mongodb://${MONGO_USER}:${MONGO_PASSWORD}${MONGO_PATH}`);
   }
 }

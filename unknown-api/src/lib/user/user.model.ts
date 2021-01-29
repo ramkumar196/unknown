@@ -11,8 +11,7 @@ const userSchema = new mongoose.Schema(
   {
     address: addressSchema,
     email: String,
-    firstName: String,
-    lastName: String,
+    userName: String,
     password: {
       type: String,
       get: (): undefined => undefined,
@@ -26,9 +25,9 @@ const userSchema = new mongoose.Schema(
   },
 );
 
-userSchema.virtual('fullName').get(function () {
-  return `${this.firstName} ${this.lastName}`;
-});
+// userSchema.virtual('fullName').get(function () {
+//   return `${this.firstName} ${this.lastName}`;
+// });
 
 userSchema.virtual('posts', {
   ref: 'Post',

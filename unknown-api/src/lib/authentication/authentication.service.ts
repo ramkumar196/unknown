@@ -1,11 +1,11 @@
 import * as bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
-import UserWithThatEmailAlreadyExistsException from '../exceptions/UserWithThatEmailAlreadyExistsException';
-import DataStoredInToken from '../interfaces/dataStoredInToken';
-import TokenData from '../interfaces/tokenData.interface';
+import UserWithThatEmailAlreadyExistsException from '../../exceptions/UserWithThatEmailAlreadyExistsException';
+import DataStoredInToken from '../../interfaces/dataStoredInToken';
+import TokenData from '../../interfaces/tokenData.interface';
 import CreateUserDto from '../user/user.dto';
 import User from '../user/user.interface';
-import userModel from './../user/user.model';
+import userModel from '../user/user.model';
 
 class AuthenticationService {
   public user = userModel;
@@ -23,10 +23,7 @@ class AuthenticationService {
     });
     const tokenData = this.createToken(user);
     const cookie = this.createCookie(tokenData);
-    return {
-      cookie,
-      user,
-    };
+    return tokenData;
   }
   public createCookie(tokenData: TokenData) {
     return `Authorization=${tokenData.token}; HttpOnly; Max-Age=${tokenData.expiresIn}`;

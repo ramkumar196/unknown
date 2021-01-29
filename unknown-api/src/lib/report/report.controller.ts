@@ -1,5 +1,5 @@
 import { Request, Response, Router } from 'express';
-import Controller from '../interfaces/controller.interface';
+import Controller from '../../interfaces/controller.interface';
 import userModel from '../user/user.model';
 
 class ReportController implements Controller {

@@ -1,9 +1,9 @@
 import { Request, Response, NextFunction, Router } from 'express';
-import PostNotFoundException from '../exceptions/PostNotFoundException';
-import Controller from '../interfaces/controller.interface';
-import RequestWithUser from '../interfaces/requestWithUser.interface';
-import authMiddleware from '../middleware/auth.middleware';
-import validationMiddleware from '../middleware/validation.middleware';
+import PostNotFoundException from '../../exceptions/PostNotFoundException';
+import Controller from '../../interfaces/controller.interface';
+import RequestWithUser from '../../interfaces/requestWithUser.interface';
+import authMiddleware from '../../middleware/auth.middleware';
+import validationMiddleware from '../../middleware/validation.middleware';
 import CreatePostDto from './post.dto';
 import Post from './post.interface';
 import postModel from './post.model';

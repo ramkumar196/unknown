@@ -1,6 +1,6 @@
 import * as mongoose from 'mongoose';
-import * as request from 'supertest';
-import App from '../../app';
+import * as request from 'lib/authentication/tests/supertest';
+import App from '../../../app';
 import CreateUserDto from '../../user/user.dto';
 import AuthenticationController from '../authentication.controller';
 

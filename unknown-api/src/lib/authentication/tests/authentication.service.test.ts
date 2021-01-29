@@ -1,5 +1,5 @@
-import UserWithThatEmailAlreadyExistsException from '../../exceptions/UserWithThatEmailAlreadyExistsException';
-import TokenData from '../../interfaces/tokenData.interface';
+import UserWithThatEmailAlreadyExistsException from '../../../exceptions/UserWithThatEmailAlreadyExistsException';
+import TokenData from '../../../interfaces/tokenData.interface';
 import CreateUserDto from '../../user/user.dto';
 import AuthenticationService from '../authentication.service';
 
