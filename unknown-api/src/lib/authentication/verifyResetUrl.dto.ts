@@ -1,9 +1,11 @@
 import { IsString } from 'class-validator';
 import { IsEmail } from '../../../node_modules/class-validator/index';
 
-class ResetPasswordDto {
+class VerifyResetUrlDto {
+  @IsString()
+  public token: string;
   @IsEmail()
   public email: string;
 }
 
-export default ResetPasswordDto;
+export default VerifyResetUrlDto;

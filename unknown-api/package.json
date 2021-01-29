@@ -15,8 +15,10 @@
     "dotenv": "^8.2.0",
     "envalid": "^6.0.2",
     "express": "^4.17.1",
+    "guid-typescript": "^1.0.9",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.8.11"
+    "mongoose": "^5.8.11",
+    "nodemailer": "^6.4.17"
   },
   "devDependencies": {
     "@types/cookie-parser": "^1.4.2",

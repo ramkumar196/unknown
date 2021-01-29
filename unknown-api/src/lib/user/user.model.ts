@@ -12,6 +12,8 @@ const userSchema = new mongoose.Schema(
     address: addressSchema,
     email: String,
     userName: String,
+    resetToken:String,
+    resetUpdateTime: Date,
     password: {
       type: String,
       get: (): undefined => undefined,

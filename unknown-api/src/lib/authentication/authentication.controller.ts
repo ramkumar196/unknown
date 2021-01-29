@@ -14,6 +14,11 @@ import AuthenticationService from './authentication.service';
 import LogInDto from './logIn.dto';
 import VerifyTokenDto from './verifytoken.dto';
 import ResetPasswordDto from './resetPassword.dto';
+import { Guid } from "guid-typescript";
+import ResetPasswordFailedException from 'exceptions/ResetPasswordFailed';
+import VerifyResetUrlDto from './verifyResetUrl.dto';
+import ChangePasswordDto from './changePassword.dto';
+
 
 class AuthenticationController implements Controller {
   public path = '/auth';
@@ -29,6 +34,9 @@ class AuthenticationController implements Controller {
     this.router.post(`${this.path}/register`, validationMiddleware(CreateUserDto), this.registration);
     this.router.post(`${this.path}/login`, validationMiddleware(LogInDto), this.loggingIn);
     this.router.post(`${this.path}/me`, this.verifyToken);
+    this.router.post(`${this.path}/reset-password`,validationMiddleware(ResetPasswordDto),this.resetPassword);
+    this.router.post(`${this.path}/change-password`,validationMiddleware(ChangePasswordDto),this.changePassword);
+    this.router.post(`${this.path}/verify-reset-link`,validationMiddleware(VerifyTokenDto),this.verifyResetLink);
     this.router.post(`${this.path}/logout`, this.loggingOut);
   }
 
@@ -87,12 +95,33 @@ class AuthenticationController implements Controller {
     const resetPasswordData: ResetPasswordDto = request.body;
     const user = await this.user.findOne({ email: resetPasswordData.email });
     if (user) {
-      //update guid in users
-      //form reset link
-      //send email
-  
+      let resetToken : Guid = Guid.create();
+      this.user.updateOne({_id:user._id},{resetToken:resetToken,resetUpdateTime:new Date()});
+      response.send(200);
     } else {
-      next(new WrongCredentialsException());
+      next(new ResetPasswordFailedException());
+    }
+  }
+
+  private verifyResetLink = async (request: Request, response: Response, next: NextFunction) => {
+    const verifyResetUrlDto: VerifyResetUrlDto = request.body;
+    const user = await this.user.findOne({ resetToken: verifyResetUrlDto.token, resetUpdateTime: {$lt:new Date(Date.now() - 15*60 * 1000)}});
+    if (user) {
+        response.send(200);
+    } else {
+      next(new ResetPasswordFailedException());
+    }
+  }
+
+  private changePassword = async (request: Request, response: Response, next: NextFunction) => {
+    const changePasswordDto: ChangePasswordDto = request.body;
+    const user = await this.user.findOne({ resetToken: changePasswordDto.token, resetUpdateTime: {$lt:new Date(Date.now() - 15*60 * 1000)}});
+    if (user) {
+      const hashedPassword = await bcrypt.hash(user.password, 10);
+      this.user.updateOne({_id:user._id},{password:hashedPassword});
+      response.send(200);
+    } else {
+      next(new ResetPasswordFailedException());
     }
   }
 
